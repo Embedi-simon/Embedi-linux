@@ -27,4 +27,6 @@ include/common_bufsiz.h.method
 include/embedded_scripts.h
 include/usage_compressed.h
 busybox
-
+busybox.*
+*.old
+docs/

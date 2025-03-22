@@ -15,21 +15,36 @@ function usage()
 	echo "	busybox: build busybox"
 }
 
-function build_linux()
+function linux_config()
 {
-	echo "build linux"
+	echo "linux config"
 	cd $LINUX_PATH
 	pwd
 	make menuconfig
 }
 
-
-function build_busybox()
+function linux_build()
 {
-	echo "build busybox"
+	echo "linux compile"
+	cd $LINUX_PATH
+	pwd
+	make
+}
+
+function busybox_config()
+{
+	echo "busybox config"
 	cd $BUSYBOX_PATH
 	pwd
 	make menuconfig
+}
+
+function busybox_build()
+{
+	echo "busybox compile"
+	cd $BUSYBOX_PATH
+	pwd
+	make
 }
 
 linux_path=./linux-6.9.1
@@ -38,15 +53,35 @@ if [ $# -lt 1 ]; then
 	usage
 else
 	case $1 in
-		linux)
-			build_linux
-		;;
-		busybox)
-			build_busybox
-		;;
+		-m)
+			case $2 in
+				linux)
+					linux_config
+					;;
+				busybox)
+					busybox_config
+					;;
+				*)
+					usage
+					;;
+			esac
+			;;
+		-b)
+			case $2 in
+				linux)
+					linux_build
+					;;
+				busybox)
+					busybox_build
+					;;
+				*)
+					usage
+					;;
+			esac
+			;;
 		*)
-		usage
-		;;
+			usage
+			;;
 	esac
 
 fi
